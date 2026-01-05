@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: dan
+      POSTGRES_PASSWORD: dan
+      POSTGRES_DB: blood
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    depends_on:
+      - postgres
+    ports:
+      - "18081:8080"   # http://localhost:18081
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
